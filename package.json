@@ -1,0 +1,24 @@
+{
+  "name": "react-builder",
+  "version": "0.1.0",
+  "description": "a base builder for supportting reactjs project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonyerx/react-builder.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "webpack"
+  ],
+  "author": "tonyerx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tonyerx/react-builder/issues"
+  },
+  "homepage": "https://github.com/tonyerx/react-builder#readme"
+}
