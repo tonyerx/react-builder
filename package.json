@@ -4,7 +4,10 @@
   "description": "a base builder for supportting reactjs project.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "set NODE_ENV=dev&& node builder/build.js",
+    "pre": "set NODE_ENV=pre&& node builder/build.js",
+    "prod": "set NODE_ENV=prod&& node builder/build.js"
   },
   "repository": {
     "type": "git",
@@ -36,7 +39,7 @@
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
     "webpack": "^3.8.1",
-    "webpack-dev-server": "^3.1.1"
+    "webpack-dev-server": "^2.10.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
