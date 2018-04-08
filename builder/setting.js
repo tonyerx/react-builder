@@ -9,7 +9,7 @@ module.exports = {
     index: [rsv('../src/app/index/main.js')],
   },
   outRoot: rsv('../dist'),
-  publicPath: '/static/cgVoice',
+  publicPath: '/static/constellation',
   tpls: {
       
   },

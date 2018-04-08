@@ -167,21 +167,15 @@ module.exports = env => {
   }
   const commonPlugins = [
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': env
+      'builder': {
+        'ENV': JSON.stringify(env)
       }
     }),
   ]
   const plugins =
     isDev
-      ? getHtmlPlugin().concat([
-        new webpack.DefinePlugin({
-          'builder': {
-            'ENV': JSON.stringify(process.env.NODE_ENV)
-          }
-        })
-      ])
-      : [ 
+      ? commonPlugins.concat(getHtmlPlugin())
+      : [
         new CleanWebpackPlugin(['dist'], {
           root: rsv('..'),
         })
