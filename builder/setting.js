@@ -19,7 +19,7 @@ module.exports = {
   polyfill: true,
 
   resolve: {
-    extensions: ['.js', '.css', '.html',],
+    extensions: ['.js', '.jsx', '.css', '.html',],
   },
   
 

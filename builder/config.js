@@ -48,7 +48,15 @@ module.exports = env => {
     isDev
       ? [
           {
-            test: /\.m\.css$/,
+            test: /\.g\.css$/,
+            use: [
+              'style-loader',
+              'css-loader',
+            ]
+          },
+          {
+            test: /\.css$/,
+            exclude: /\.g\.css$/,
             use: [
               'style-loader',
               {
@@ -57,18 +65,28 @@ module.exports = env => {
                   modules: true,
                   localIdentName: '[path]_[local]',
                 }
-              },
+              }
             ]
-          },
-          {
-            test: /\.css$/,
-            exclude: /\.m\.css$/,
-            use: ['style-loader', 'css-loader']
           }
         ]
       : [
           {
-            test: /\.m\.css$/,
+            test: /\.g\.css$/,
+            use: ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: [
+                {
+                  loader: 'css-loader',
+                  options: {
+                    minimize: true,
+                  }
+                }
+              ]
+            })
+          },
+          {
+            test: /\.css$/,
+            exclude: /\.g\.css$/,
             use: ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
@@ -78,21 +96,6 @@ module.exports = env => {
                     modules: true,
                     minimize: true,
                     localIdentName: '[hash:base64:5]'
-                  }
-                }
-              ]
-            })
-          },
-          {
-            test: /\.css$/,
-            exclude: /\.m\.css$/,
-            use: ExtractTextPlugin.extract({
-              fallback: 'style-loader',
-              use: [
-                {
-                  loader: 'css-loader',
-                  options: {
-                    minimize: true
                   }
                 }
               ]
@@ -171,28 +174,34 @@ module.exports = env => {
   ]
   const plugins =
     isDev
-      ? getHtmlPlugin()
+      ? getHtmlPlugin().concat([
+        new webpack.DefinePlugin({
+          'builder': {
+            'ENV': JSON.stringify(process.env.NODE_ENV)
+          }
+        })
+      ])
       : [ 
-          new CleanWebpackPlugin(['dist'], {
-            root: rsv('..'),
-          })
-        ].concat(commonPlugins, getHtmlPlugin(), [
-          new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: Infinity
-          }),
-          new webpack.optimize.CommonsChunkPlugin({
-            name: 'manifest'
-          }),
-          new webpack.optimize.ModuleConcatenationPlugin(),
-          new webpack.optimize.UglifyJsPlugin({
-            sourceMap: setting[env].sourceMap,
-            compress: {
-              warnings: false
-            },
-          }),
-          new ExtractTextPlugin('static/css/[name].css?[contenthash:8]'),
-        ])
+        new CleanWebpackPlugin(['dist'], {
+          root: rsv('..'),
+        })
+      ].concat(commonPlugins, getHtmlPlugin(), [
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendor',
+          minChunks: Infinity
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+          name: 'manifest'
+        }),
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+          sourceMap: setting[env].sourceMap,
+          compress: {
+            warnings: false
+          },
+        }),
+        new ExtractTextPlugin('static/css/[name].css?[contenthash:8]'),
+      ])
   console.log('----plugin配置----\n', plugins)
   
   return {

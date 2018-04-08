@@ -19,7 +19,6 @@ if (process.env.NODE_ENV === 'dev') {
       chunks: false
     }
   })
-  console.log('view at 192.168.10.124:80')
   server.listen(8081, function(err) {
     if (err) {
       console.log(err)
@@ -27,45 +26,34 @@ if (process.env.NODE_ENV === 'dev') {
     }
   })
 } else {
-  // const compiler = webpack(config)
-  // compiler.plugin('compilation', compilation => {
-  //   compilation.plugin('html-webpack-plugin-after-html-processing', (data, cb) => {
-  //     var tplArgs = data.plugin.options.tplArgs
-      
-  //     if (tplArgs) {    
-  //       data.html = _.template(data.html)(tplArgs)
-  //     }
+  const compiler = webpack(config)
   
-  //     cb(null, data)
-  //   })
-  // })
+  compiler.run((err, stats) => {
+    if (err) {
+      console.error(err.stack || err)
   
-  // compiler.run((err, stats) => {
-  //   if (err) {
-  //     console.error(err.stack || err)
+      if (err.details) {
+        console.error(err.details)
+      }
   
-  //     if (err.details) {
-  //       console.error(err.details)
-  //     }
+      return
+    }
   
-  //     return
-  //   }
+    if (stats.hasErrors()) {
+      console.log(stats.toString('errors-only'))
   
-  //   if (stats.hasErrors()) {
-  //     console.log(stats.toString('errors-only'))
+      return
+    }
   
-  //     return
-  //   }
+    if (stats.hasWarnings()) {
+      //
+    }
   
-  //   if (stats.hasWarnings()) {
-  //     //
-  //   }
-  
-  //   console.log(stats.toString({
-  //     chunks: false,
-  //     colors: true
-  //   }))
-  // })
+    console.log(stats.toString({
+      chunks: false,
+      colors: true
+    }))
+  })
 }
 
 
