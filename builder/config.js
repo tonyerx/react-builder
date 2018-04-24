@@ -6,6 +6,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const autoprefixer = require('autoprefixer')
 
 const setting = require('./setting')
 const { dev, pre, prod } = setting
@@ -43,20 +44,31 @@ module.exports = env => {
 
   const devtool = setting[env].sourceMap || 'source-map'
 
+  const postcssRule = {
+    loader: 'postcss-loader',
+    options: {
+      ident: 'postcss',
+      plugins: () => [
+        autoprefixer()
+      ]
+    }
+  }
+
   // css编译规则
   const cssRule =
     isDev
       ? [
           {
-            test: /\.g\.css$/,
+            test: /\.css$/,
+            exclude: /\.m\.css$/,
             use: [
               'style-loader',
               'css-loader',
+              postcssRule,
             ]
           },
           {
-            test: /\.css$/,
-            exclude: /\.g\.css$/,
+            test: /\.m\.css$/,
             use: [
               'style-loader',
               {
@@ -65,13 +77,15 @@ module.exports = env => {
                   modules: true,
                   localIdentName: '[path]_[local]',
                 }
-              }
+              },
+              postcssRule,
             ]
           }
         ]
       : [
           {
-            test: /\.g\.css$/,
+            test: /\.css$/,
+            exclude: /\.m\.css$/,            
             use: ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
@@ -80,13 +94,13 @@ module.exports = env => {
                   options: {
                     minimize: true,
                   }
-                }
+                },
+                postcssRule,
               ]
             })
           },
           {
-            test: /\.css$/,
-            exclude: /\.g\.css$/,
+            test: /\.m\.css$/,
             use: ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
@@ -97,7 +111,8 @@ module.exports = env => {
                     minimize: true,
                     localIdentName: '[hash:base64:5]'
                   }
-                }
+                },
+                postcssRule,
               ]
             })
           }
@@ -112,6 +127,9 @@ module.exports = env => {
       {
         loader: 'babel-loader',
         options: {
+          plugins: [
+            ["import", { libraryName: "antd-mobile", style: "css" }]
+          ],
           presets: [
             'stage-0',
             'env',
