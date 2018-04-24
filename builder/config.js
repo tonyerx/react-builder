@@ -42,7 +42,7 @@ module.exports = env => {
   
   const resolve = setting.resolve
 
-  const devtool = setting[env].sourceMap || 'source-map'
+  const devtool = setting[env].sourceMap || false
 
   const postcssRule = {
     loader: 'postcss-loader',
@@ -127,13 +127,9 @@ module.exports = env => {
       {
         loader: 'babel-loader',
         options: {
-          plugins: [
-            ["import", { libraryName: "antd-mobile", style: "css" }]
-          ],
           presets: [
             'stage-0',
             'env',
-            'react'
           ],
         }
       }

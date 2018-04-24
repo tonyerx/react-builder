@@ -1,16 +1,30 @@
-import React from 'react'
-
-import Block from '../../component/Block'
-import Item from '../../component/Item'
-import Tab from '../../component/Tab'
+import $ from 'webpack-zepto'
+import Dialog from '../../component/dialog'
 
 import './style'
 
-export default () => (
-  <div>
-    <p>Start a react-builder project success!</p>
-    <Block/>
-    <Item/>
-    <Tab />
-  </div>
-)
+function Letter() {
+  this.dialog = new Dialog()
+  
+  this.init()
+}
+
+Letter.prototype = {
+
+  constructor: Letter,
+
+  init() {
+    this.dialog.show({
+      content: '这是一个测试弹窗',
+      confirmText: '确定',
+      cb: this.confirm.bind(this),
+      cancelText: '取消'
+    })
+  },
+
+  confirm() {
+    console.log('确认了')
+  }
+}
+
+export default Letter

@@ -15,7 +15,7 @@ module.exports = {
   },
   tplRoot: '../src/template/',
 
-  vendor: ['react', 'react-dom', 'prop-types', 'classnames'],
+  vendor: ['webpack-zepto', 'fastclick'],
   polyfill: true,
 
   resolve: {

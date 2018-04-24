@@ -1,0 +1,87 @@
+
+.dialog {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .3);
+}
+
+.dialog-mask {
+  display:flex;
+  display: -webkit-flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+  align-items:center;
+  -webkit-align-items:center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .3);
+}
+
+.dialog-body {
+  width: 300px;
+  padding: 16px 12px 12px 12px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  background-color: #fff;
+}
+
+.dialog.animateIn {
+  animation: fadeIn ease .5s forwards;
+}
+.dialog.animateOut {
+  animation: fadeOut ease .4s forwards;
+  pointer-events: none;
+}
+
+.dialog.animateIn > .dialog-mask > .dialog-body {
+  animation: scaleIn ease .5s forwards;
+}
+.dialog.animateOut > .dialog-mask > .dialog-body {
+  animation: scaleOut ease .4s forwards;      
+}
+
+.dialog-msg {
+  width: 276px;
+  margin-top: 16px;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  text-align: center;
+  color: rgba(0, 0, 0, .7);
+}
+
+.dialog-btn {
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+  margin-top: 16px;
+}
+
+.dialog-confirm, .dialog-cancel {
+  width: 134px;
+  height: 48px;
+  padding-top: 14px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  line-height: 21px;
+  font-size: 15px;
+  text-align: center;
+  letter-spacing: 0.2px;
+  color: #fff;
+}
+
+.dialog-confirm {
+  background-color: #fe531f;
+}
+
+.dialog-cancel {
+  background-color: #ccc;
+}

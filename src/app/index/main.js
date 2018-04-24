@@ -2,8 +2,6 @@
  * 入口文件
  */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
 import FastClick from 'fastclick'
 import App from './app'
 
@@ -23,4 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
   FastClick.attach(document.body)
 }, false)
 
-ReactDOM.render(<App />, document.getElementById('root'))
+;(function() {
+  const app = new App()
+})()
