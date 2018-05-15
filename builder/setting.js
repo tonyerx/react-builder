@@ -9,7 +9,7 @@ module.exports = {
     index: [rsv('../src/app/index/main.js')],
   },
   outRoot: rsv('../dist'),
-  publicPath: '/static/constellation',
+  publicPath: '/static/constellation/',
   tpls: {
       
   },
@@ -25,6 +25,7 @@ module.exports = {
 
   dev: {
     sourceMap: 'source-map',
+    mock: true,
   },
   pre: {
     sourceMap: 'cheap-module-source-map'
