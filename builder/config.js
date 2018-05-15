@@ -21,6 +21,11 @@ module.exports = env => {
 
   // 入口配置
   const entry = setting.entries
+  if (isDev && setting[env].mock) {
+    for(let k in entry) {
+      entry[k].unshift(require.resolve('./mock'))
+    }
+  }
   if (setting.polyfill) {
     for(let k in entry) {
       entry[k].unshift('babel-polyfill')
@@ -42,7 +47,7 @@ module.exports = env => {
   
   const resolve = setting.resolve
 
-  const devtool = setting[env].sourceMap || 'source-map'
+  const devtool = setting[env].sourceMap || false
 
   const postcssRule = {
     loader: 'postcss-loader',
@@ -148,11 +153,10 @@ module.exports = env => {
           {
             loader: 'url-loader',
             options: {
-              limit: 100000,
+              limit: 15000,
               name: isDev ? 'static/media/[name].[ext]': 'media/[name].[ext]?[hash:8]'
             }
           }
-
         ]
       },
       {
