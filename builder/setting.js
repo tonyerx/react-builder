@@ -6,14 +6,14 @@ function rsv(p) {
 
 module.exports = {
   entries: {
-    index: [rsv('../src/app/index/main.js')],
+    index: [rsv('../src/apps/index/main.js')],
   },
   outRoot: rsv('../dist'),
   publicPath: '/static/constellation/',
   tpls: {
       
   },
-  tplRoot: '../src/template/',
+  tplRoot: '../src/templates/',
 
   vendor: ['react', 'react-dom', 'prop-types', 'classnames'],
   polyfill: true,

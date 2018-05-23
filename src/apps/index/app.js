@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Block from '../../component/Block'
-import Item from '../../component/Item'
-import Tab from '../../component/Tab'
+import Block from '../../components/Block'
+import Item from '../../components/Item'
+import Tab from '../../components/Tab'
 
 import './style'
 
