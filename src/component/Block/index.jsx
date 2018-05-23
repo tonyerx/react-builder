@@ -2,9 +2,8 @@ import React from 'react'
 
 import style from './style.m'
 
-console.log(builder.ENV)
 class Block extends React.Component {
-  render() {
+  render () {
     return (
       <div className={style.w}>
         <label>当前环境：</label>{builder.ENV}<br />

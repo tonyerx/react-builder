@@ -6,7 +6,7 @@ import Tab from '../../component/Tab'
 
 import './style'
 
-export default () => (
+const App = () => (
   <div>
     <p>Start a react-builder project success!</p>
     <Block/>
@@ -14,3 +14,5 @@ export default () => (
     <Tab />
   </div>
 )
+
+export default App

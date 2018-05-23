@@ -14,12 +14,14 @@ const shouldLoadConsole = (
 )
 if (shouldLoadConsole) {
   System.import('vconsole').then((VConsole) => {
+    /* eslint-disable no-unused-vars */
     const vConsole = new VConsole()
+    /* eslint-enable no-unused-vars */
   })
 }
 
 // 取消移动端点击300ms延迟
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   FastClick.attach(document.body)
 }, false)
 

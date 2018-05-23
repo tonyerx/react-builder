@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
+const ESLintFriendlyFormatter = require('eslint-friendly-formatter')
 
 const setting = require('./setting')
 const { dev, pre, prod } = setting
@@ -48,6 +49,7 @@ module.exports = env => {
   const resolve = setting.resolve
 
   const devtool = setting[env].sourceMap || false
+
 
   const postcssRule = {
     loader: 'postcss-loader',
@@ -141,9 +143,22 @@ module.exports = env => {
             'react'
           ],
         }
-      }
+      },
     ]
   }
+  // 代码规范检测规则
+  const eslintRule = setting[env].eslint
+    ? {
+      test: /\.(js|jsx)$/,
+      loader: 'eslint-loader',
+      enforce: 'pre',
+      include: [rsv('../src')],
+      options: {
+        formatter: ESLintFriendlyFormatter,
+      }
+    }
+    : {}
+  
   // 编译规则汇总
   const module = {
     rules: [
@@ -165,7 +180,7 @@ module.exports = env => {
           loader: 'html-loader'
         }
       },
-    ].concat(cssRule, jsRule)
+    ].concat(cssRule, jsRule, eslintRule)
   }
   console.log('----loader配置----\n', module.rules)
 

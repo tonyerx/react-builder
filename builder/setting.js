@@ -25,7 +25,8 @@ module.exports = {
 
   dev: {
     sourceMap: 'source-map',
-    mock: true
+    mock: true,
+    eslint: true
   },
   pre: {
     sourceMap: 'cheap-module-source-map'
