@@ -189,14 +189,13 @@ module.exports = env => {
     const pluginArr = []
     for(let k in entry) {
       if (k === 'vendor') break
+      const tplName = tpls[k] ? tpls[k] : k
       pluginArr.push(
-        tpls[k]
-        ? new HtmlWebpackPlugin(tpls[k])
-        : new HtmlWebpackPlugin({
-           chunks: ['manifest', 'vendor', k],
-           filename: k + '.html',
-           template: rsv(setting.tplRoot + k + '.html'),
-           inject: true
+        new HtmlWebpackPlugin({
+          chunks: ['manifest', 'vendor', k],
+          filename: k + '.html',
+          template: rsv(setting.tplRoot + tplName + '.html'),
+          inject: true
         })
       )
     }
