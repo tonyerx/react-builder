@@ -7,11 +7,12 @@ function rsv(p) {
 module.exports = {
   entries: {
     index: [rsv('../src/apps/index/main.js')],
+    own: [rsv('../src/apps/own/main.js')]
   },
   outRoot: rsv('../dist'),
   publicPath: '/static/constellation/',
   tpls: {
-      
+    own: 'public'
   },
   tplRoot: '../src/templates/',
 
