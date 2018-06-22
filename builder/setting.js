@@ -20,12 +20,12 @@ module.exports = {
   polyfill: true,
 
   resolve: {
-    extensions: ['.js', '.jsx', '.css', '.html',],
+    extensions: ['.js', '.jsx', '.css', '.less', '.html',],
   },
   
 
   dev: {
-    sourceMap: 'source-map',
+    sourceMap: 'cheap-module-eval-source-map',
     mock: true,
     eslint: true
   },
@@ -33,6 +33,6 @@ module.exports = {
     sourceMap: 'cheap-module-source-map'
   },
   prod: {
-    sourceMap: false
+    sourceMap: 'cheap-module-source-map'
   },
 }

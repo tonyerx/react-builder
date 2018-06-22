@@ -4,7 +4,7 @@ const config = require('./config')(process.env.NODE_ENV)
 const webpackDevServer = require('webpack-dev-server')
 
 if (process.env.NODE_ENV === 'dev') {
-  const serverUrl = 'http://localhost:8081'
+  const serverUrl = 'http://localhost:9000'
   // 提供虚拟服务器
   for(let k in config.entry) {
     config.entry[k].unshift('webpack-dev-server/client?' + serverUrl, 'webpack/hot/dev-server')
@@ -13,13 +13,13 @@ if (process.env.NODE_ENV === 'dev') {
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
   const compiler = webpack(config)
   var server = new webpackDevServer(compiler, {
-    // hot: trufe,
+    // hot: true,
     stats: {
       color: true,
       chunks: false
     }
   })
-  server.listen(8081, function(err) {
+  server.listen(9000, function(err) {
     if (err) {
       console.log(err)
       return

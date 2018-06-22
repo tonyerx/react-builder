@@ -18,6 +18,8 @@ function rsv(p) {
 
 module.exports = env => {
   const isDev = env === 'dev'
+  const jsSourceMap = setting[env].sourceMap || false
+  const cssSourceMap = !!setting[env].sourceMap
   console.log('----当前环境----\n', env)
 
   // 入口配置
@@ -48,16 +50,33 @@ module.exports = env => {
   
   const resolve = setting.resolve
 
-  const devtool = setting[env].sourceMap || false
+  const devtool = jsSourceMap
 
 
   const postcssRule = {
     loader: 'postcss-loader',
     options: {
       ident: 'postcss',
+      sourceMap: cssSourceMap,
       plugins: () => [
-        autoprefixer()
+        autoprefixer({
+          browsers: [
+              'last 4 versions', 
+              'Firefox ESR', '> 1%', 
+              'not ie < 9', 
+              'iOS >= 8', 
+              'Android >= 4'
+          ],
+          flexbox: 'no-2009'
+        })
       ]
+    }
+  }
+
+  const lessRule = {
+    loader: 'less-loader',
+    options: {
+      sourceMap: cssSourceMap
     }
   }
 
@@ -67,7 +86,6 @@ module.exports = env => {
       ? [
           {
             test: /\.css$/,
-            exclude: /\.m\.css$/,
             use: [
               'style-loader',
               'css-loader',
@@ -75,51 +93,83 @@ module.exports = env => {
             ]
           },
           {
-            test: /\.m\.css$/,
+            test: /\.less$/,
+            exclude: /\.m\.less$/,
+            use: [
+              'style-loader',
+              'css-loader',
+              postcssRule,
+              lessRule
+            ]
+          },
+          {
+            test: /\.m\.less$/,
             use: [
               'style-loader',
               {
                 loader: 'css-loader',
                 options: {
+                  sourceMap: cssSourceMap,
                   modules: true,
                   localIdentName: '[path]_[local]',
                 }
               },
               postcssRule,
+              lessRule
             ]
           }
         ]
       : [
           {
             test: /\.css$/,
-            exclude: /\.m\.css$/,            
             use: ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
                 {
                   loader: 'css-loader',
                   options: {
+                    sourceMap: cssSourceMap,
                     minimize: true,
                   }
                 },
-                postcssRule,
+                postcssRule
               ]
             })
           },
           {
-            test: /\.m\.css$/,
+            test: /\.less$/,
+            exclude: /\.m\.less$/,            
             use: ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
                 {
                   loader: 'css-loader',
                   options: {
+                    sourceMap: cssSourceMap,
+                    minimize: true,
+                  }
+                },
+                postcssRule,
+                lessRule
+              ]
+            })
+          },
+          {
+            test: /\.m\.less$/,
+            use: ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: [
+                {
+                  loader: 'css-loader',
+                  options: {
+                    sourceMap: cssSourceMap,
                     modules: true,
                     minimize: true,
                     localIdentName: '[hash:base64:5]'
                   }
                 },
                 postcssRule,
+                lessRule
               ]
             })
           }
@@ -169,7 +219,7 @@ module.exports = env => {
             loader: 'url-loader',
             options: {
               limit: 15000,
-              name: isDev ? 'static/media/[name].[ext]': 'media/[name].[ext]?[hash:8]'
+              name: isDev ? 'static/media/[name].[ext]': 'static/media/[name].[ext]?[hash:8]'
             }
           }
         ]
