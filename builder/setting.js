@@ -27,7 +27,9 @@ module.exports = {
   dev: {
     sourceMap: 'cheap-module-eval-source-map',
     mock: true,
-    eslint: true
+    eslint: true,
+    hostname: '192.168.10.124',
+    port: '8081'
   },
   pre: {
     sourceMap: 'cheap-module-source-map'

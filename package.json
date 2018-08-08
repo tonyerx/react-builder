@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "set NODE_ENV=dev&& node builder/build.js",
-    "pre": "set NODE_ENV=pre&& node builder/build.js",
-    "prod": "set NODE_ENV=prod&& node builder/build.js"
+    "dev": "cross-env NODE_ENV=dev node builder/build.js",
+    "pre": "cross-env NODE_ENV=pre node builder/build.js",
+    "prod": "cross-env NODE_ENV=prod node builder/build.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "eslint-config-react": "^1.1.7",

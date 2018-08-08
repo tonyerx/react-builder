@@ -1,10 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
+const setting = require('./setting.js')[process.env.NODE_ENV]
 const config = require('./config')(process.env.NODE_ENV)
 const webpackDevServer = require('webpack-dev-server')
 
 if (process.env.NODE_ENV === 'dev') {
-  const serverUrl = 'http://localhost:9000'
+  const serverUrl = setting.hostname + ':' + setting.port
   // 提供虚拟服务器
   for(let k in config.entry) {
     config.entry[k].unshift('webpack-dev-server/client?' + serverUrl, 'webpack/hot/dev-server')
@@ -19,7 +20,7 @@ if (process.env.NODE_ENV === 'dev') {
       chunks: false
     }
   })
-  server.listen(9000, function(err) {
+  server.listen(setting.port, function(err) {
     if (err) {
       console.log(err)
       return
